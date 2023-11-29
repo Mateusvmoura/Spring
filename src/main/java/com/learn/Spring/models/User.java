@@ -13,9 +13,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = User.TABLE_NAME)
+@Table(name="users")
 public class User {
-    public static final String TABLE_NAME = "user";
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +43,7 @@ public class User {
         this.password = password;
     }
 
-    public static String getTableName() {
-        return TABLE_NAME;
-    }
+  
 
     public Long getId() {
         return id;
