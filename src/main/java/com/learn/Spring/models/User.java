@@ -1,5 +1,8 @@
 package com.learn.Spring.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -8,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -32,18 +36,9 @@ public class User {
     @Size(min=8, max=50)
     @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
-
-    public User() {
-    }
-
-    public User(Long id, @NotBlank @Size(min = 2, max = 100) String userName,
-            @NotBlank @Size(min = 8, max = 50) String password) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-    }
-
-  
+    
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<Task>();    
 
     public Long getId() {
         return id;
@@ -66,6 +61,16 @@ public class User {
     }
 
     public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public User() {
+    }
+
+    public User(Long id, @NotBlank @Size(min = 2, max = 100) String userName,
+            @NotBlank @Size(min = 8, max = 50) String password) {
+        this.id = id;
+        this.userName = userName;
         this.password = password;
     }
 
@@ -104,6 +109,14 @@ public class User {
         } else if (!password.equals(other.password))
             return false;
         return true;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
     
 
